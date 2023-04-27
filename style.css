@@ -1,0 +1,185 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family:'Poppins', sans-serif;
+    box-sizing: border-box;
+    flex-direction: column;
+    
+}
+#navbar {
+    background-color: #1D1B26; 
+    position: fixed;
+    top: px; 
+    width: 100%; 
+    transition: top 0.3s;
+    text-align: center; 
+  }
+
+#navbar a {
+    float: left;
+    font-weight: 500;
+    font-size: larger;
+    display: block;
+    color: white;
+    text-align:center;
+    padding: 25px;
+    text-decoration: none;
+    justify-content: left;
+  }
+  
+#navbar a:hover {
+    background-color: #333;
+    color: black;
+}
+
+body {
+    width: 100%;
+    height: 150vh;
+    background: #222;
+    display:flex;
+    flex-direction: column;
+    clear: both;
+    
+}
+.Topic {
+    width: 100%;
+    height: 10vh;
+    margin: 0;
+    padding: 0;
+    background: #1D1B26;
+    display:flex;
+}
+
+.Topic h2 {
+    font-weight: 500;
+    font-size: x-large;
+    display: block;
+    color: white;
+    text-align:center;
+    padding: 20px;
+    text-decoration: none;
+    justify-content: left;
+}
+
+.subjects {
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+}
+
+.subjects h2{
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-top: 40px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.progress-bar {
+    background: #959595;
+    width: 600px;
+    height: 10px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.progress-bar div {
+    height: 10px;
+    border-radius: 5px;
+    width: 0%;
+    position: relative;
+}
+
+.progress-bar div span {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #222;
+    color: #FFF;
+    float: right;
+    margin-left: -20px;
+    margin-top: -15px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border : 1px solid #FFF;
+} 
+.progress-telling-text {
+    margin-bottom: 15px;
+    color: white;
+}
+
+.Physics {
+    background: goldenrod;
+    animation: Physics 1s linear forwards;
+}
+
+.your-physics {
+    background: #e91e63;
+    animation: your-physics 1s linear forwards;
+}
+
+@keyframes Physics{
+    100%{
+        width: 86%;
+    }
+}
+
+@keyframes your-physics{
+    100%{
+        width: 50%;
+    }
+}
+
+.Details {
+    margin: 2px;
+    padding: 7px;
+    text-align: center;
+    font-size: medium;
+    border: 10px;
+    width: auto;
+    font-weight: 100;
+    background: yellowgreen;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.active, .Details:hover {
+    background-color: #555;
+}
+
+.addNewSubjectButton{
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #e91e63;
+    width: 20%;
+    font-weight: 100;
+    border-radius: 10px;
+    color: black;
+    cursor: pointer;
+}
+
+.content {
+    padding:0 18px;
+    margin-top: 10px;
+    background-color: #333;
+    border:0;
+    color: #FFF;
+    width: 40%;
+    border-radius: 20px;
+    flex-direction: row;
+    position: relative;   
+}
+
+.content span {
+    margin: 10px;
+}
+

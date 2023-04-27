@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href = "style.css">
+</head>
+<body>
+    <div id="navbar" class="Topic">
+        <a href="https://www.mycourseville.com/" >Home</a>
+    </div>
+    <div class="Topic">
+        <h2>Progress Bar</h2>
+    </div>
+    <div class="subjects">
+        <h2>Physics</h2>
+        <h3 class="progress-telling-text">class-progress</h3>
+        <div class="progress-bar">
+            <div class="Physics">
+              <span id="class-progress">86%</span>
+            </div>
+        </div>
+        <h3 class="progress-telling-text">your-progress</h3>
+        <div class="progress-bar">
+            <div class="your-physics">
+              <span id="your-progress">50%</span>
+            </div>
+        </div>
+        <button type="button" class="Details" onclick="expandDetails()">Details</button>
+        <div class="content" style="display: none;">
+            <input type="checkbox" id="checkInput"><span> task I</span>
+            <input type="checkbox" id="checkInput"><span> task II</span>           
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body> 
+</html>
