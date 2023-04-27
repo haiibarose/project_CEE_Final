@@ -136,3 +136,6 @@ document.addEventListener("DOMContentLoaded", async function (event) {
   await getItemsFromDB();
   showItemsInTable(itemsData);
 });
+
+
+
