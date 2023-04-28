@@ -1,138 +1,184 @@
-@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;400;600&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family:'Poppins', sans-serif;
+  box-sizing: border-box;
+  flex-direction: column;
+  
+}
+#navbar {
+  background-color: #1D1B26; 
+  position: fixed;
+  top: px; 
+  width: 100%; 
+  transition: top 0.3s;
+  text-align: center; 
+}
 
-:root {
-  --standard-border-radius: 8px;
+#navbar a {
+  float: left;
+  font-weight: 500;
+  font-size: larger;
+  display: block;
+  color: white;
+  text-align:center;
+  padding: 25px;
+  text-decoration: none;
+  justify-content: left;
+}
+
+#navbar a:hover {
+  background-color: #333;
+  color: black;
 }
 
 body {
-  font-family: "Mitr", sans-serif;
-}
-
-#app-name {
-  font-size: 2.2em;
-  font-weight: bold;
-  margin: 0;
-  text-align: center;
-}
-
-section {
-  margin: 20px 0;
-}
-.section-title {
-  font-size: 1.25em;
-  font-weight: bold;
-  margin: 10px 0;
-}
-.section-subtitle {
-  font-size: 1.1em;
-}
-.section-center {
-  text-align: center;
-}
-.section-credit {
-  text-align: center;
-  font-size: 1.1em;
-}
-.section-right {
-  text-align: right;
-}
-.section-left {
-  text-align: left;
-}
-
-.description {
-  text-align: center;
-  color: rgb(0, 2, 107);
-}
-
-.info {
-  font-size: 1em;
-}
-
-.button {
-  border-radius: 8px;
-  padding: 5px 5px;
-  border: 1px solid #aaa;
-  background: white;
-  cursor: pointer;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
-  text-align: center;
-  width: fit-content;
-}
-.button:hover {
-  background: rgb(255, 200, 105);
-  color: white;
-}
-.logout-button:hover {
-  background: rgb(204, 19, 19);
-  color: white;
-}
-.change-page-button:hover {
-  background: rgb(94, 127, 236);
-  color: white;
-}
-
-.main-table {
-  margin: 10px 0;
-  padding: 0;
   width: 100%;
-  background: #eee;
-  border-radius: 8px;
-  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1);
-  border-collapse: collapse;
-  overflow: hidden;
+  height: 150vh;
+  background: #222;
+  display:flex;
+  flex-direction: column;
+  clear: both;
+  
 }
-.main-table > thead {
-  background: #555;
+.Topic {
+  width: 100%;
+  height: 10vh;
+  margin: 0;
+  padding: 0;
+  background: #1D1B26;
+  display:flex;
+}
+
+.Topic h2 {
+  font-weight: 500;
+  font-size: x-large;
+  display: block;
+  color: white;
+  text-align:center;
+  padding: 20px;
+  text-decoration: none;
+  justify-content: left;
+}
+
+.subjects {
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+.subjects h2{
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-top: 40px;
+  margin-bottom: 5px;
   color: white;
 }
-.main-table > thead > tr > th {
-  text-align: left;
+
+.progress-bar {
+  background: #959595;
+  width: 600px;
+  height: 10px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
-.main-table td,
-.main-table th {
-  padding: 5px 10px;
-  font-size: 1em;
+
+.progress-bar div {
+  height: 10px;
+  border-radius: 5px;
+  width: 0%;
+  position: relative;
 }
-.main-table input,
-.main-table select,
-#name-to-add-2{
-  padding: 5px 10px;
-  border-radius: 8px;
-  border: 1px solid #aaa;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
+
+.progress-bar div span {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: #222;
+  color: #FFF;
+  float: right;
+  margin-left: -20px;
+  margin-top: -15px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border : 1px solid #FFF;
+} 
+.progress-telling-text {
+  margin-bottom: 15px;
+  color: white;
 }
-.main-table button {
-  border-radius: 8px;
-  padding: 5px 10px;
-  border: 1px solid #aaa;
-  background: white;
-  width: 60px;
+
+.Physics {
+  background: goldenrod;
+  animation: Physics 1s linear forwards;
+}
+
+.your-physics {
+  background: #e91e63;
+  animation: your-physics 1s linear forwards;
+}
+
+@keyframes Physics{
+  100%{
+      width: 86%;
+  }
+}
+
+@keyframes your-physics{
+  100%{
+      width: 50%;
+  }
+}
+
+.Details {
+  margin: 2px;
+  padding: 7px;
+  text-align: center;
+  font-size: medium;
+  border: 10px;
+  width: auto;
+  font-weight: 100;
+  background: yellowgreen;
+  border-radius: 5px;
+  color: black;
   cursor: pointer;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
-}
-.main-table button:hover {
-  background: rgb(255, 200, 105);
-  color: white;
+  transition: background-color 0.3s ease;
 }
 
-#delete-button{
-  border-radius: 8px;
-  padding: 5px 10px;
-  border: 1px solid #aaa;
-  background: white;
-  width: 60px;
+.active, .Details:hover {
+  background-color: #555;
+}
+
+.addNewSubjectButton{
+  margin-top: 2px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #e91e63;
+  width: 20%;
+  font-weight: 100;
+  border-radius: 10px;
+  color: black;
   cursor: pointer;
-  font-family: "Mitr", sans-serif;
-  font-size: 1em;
-}
-#delete-button:hover {
-  background: rgb(255, 200, 105);
-  color: white;
 }
 
+.content {
+  padding:0 18px;
+  margin-top: 10px;
+  background-color: #333;
+  border:0;
+  color: #FFF;
+  width: 40%;
+  border-radius: 20px;
+  flex-direction: row;
+  position: relative;   
+}
 
-
+.content span {
+  margin: 10px;
+}

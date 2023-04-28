@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href = "test.css">
+</head>
+<body>
+    <div id="navbar" class="Topic">
+        <a href="https://www.mycourseville.com/" >Home</a>
+    </div>
+    <div class="Topic">
+        <h2>Progress Bar</h2>
+    </div>
+    <div class="subjects">
+        <div class="physics">
+            <h2>Physics</h2>
+            <div class="teacher">
+                <h2 class="barName">teacher-progress</h2>
+                <div class="progressBar">
+                    <div class="teacherProgressBar">
+                        <span class="progressBox">80</span>
+                    </div>
+                </div>
+            </div>
+            <div class="student">
+                <h2 class="barName">student-progress</h2>
+                <div class="progressBar">
+                    <div class="studentProgressBar">
+                        <span class="progressBox">40</span>
+                    </div>
+                    <button class="Details" onclick="expandDetails()">Details</button>
+                    <div class="progressDetails">
+                        <p>check</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="test.js"></script>
+</body> 
+</html>
