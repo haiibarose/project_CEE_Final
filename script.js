@@ -1,4 +1,4 @@
-const { get } = require("./routes/coursevilleRoutes");
+// const { get } = require("./routes/coursevilleRoutes.js");
 
 const backendIPAddress = "127.0.0.1:3000";
 
@@ -15,7 +15,7 @@ const getItemsFromDB = async () => {
     .then((response) => response.json())
     .then((data) => {
         itemsData = data;
-        console.log(itemsData);
+        // console.log(itemsData);
     })
     .catch((error) => console.error(error))
   console.log(
@@ -35,18 +35,9 @@ const getItemsFromDB = async () => {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-    console.log("getUserProfileTest");
+    //   console.log(data);
+    // console.log("getUserProfileTest");
     })
-    // .then((data) => {
-    //   document.getElementById(
-    //     "eng-name-info"
-    //   ).innerHTML = `${data.user.title_en} ${data.user.firstname_en} ${data.user.lastname_en}`;
-    //   document.getElementById(
-    //     "thai-name-info"
-    //   ).innerHTML = `${data.user.title_th} ${data.user.firstname_th} ${data.user.lastname_th}`;
-    // })
-    // .catch((error) => console.error(error));
 };
 
 // getUserCourse
@@ -75,8 +66,8 @@ async function getCourseMaterials(cv_cid) {
     options
   );
   const data = await res.json();
-  console.log(data);
-  console.log("getCourseMaterialstest")
+  // console.log(data);
+  // console.log("getCourseMaterialstest")
   return data;
 }
 
@@ -93,8 +84,8 @@ async function getCourseSchedule(cv_cid) {
     options
   );
   const data = await res.json();
-  console.log(data);
-  console.log("getCourseScheduletest")
+  // console.log(data);
+  // console.log("getCourseScheduletest")
   return data;
 }
 
@@ -110,8 +101,8 @@ async function getCourseInfo(cv_cid) {
     options
   );
   const data = await res.json();
-  console.log(data.json());
-  console.log("getCourseInfotest")
+  // console.log(data);
+  // console.log("getCourseInfotest")
   return data;
 }
 
@@ -127,17 +118,11 @@ function scrollFunction() {
 }
 
    
-// comengess scheduleData
-
-
-(async () => {
-  const scheduleData = await getCourseSchedule(32201);
-  // console.log(scheduleData["data"]);
-})();
-
 // adding new subject and progressBar
 
 function generateNewSubject(subjectName) {
+  
+
   const subjectDiv = document.createElement('div');
   subjectDiv.classList.add(subjectName);
 
@@ -221,7 +206,7 @@ function makeCheckBox(scheduleData) {
     sp.style.margin = "5px";
     cb.style.marginright = "30px";
     details.appendChild(sp);
-    if (i < scheduleData['data'].length - 2) {
+    if (i < scheduleData['data'].length - 1) {
       details.appendChild(cb);
     }
   }
@@ -280,35 +265,61 @@ function createBarFromCV_CID(userCourses) {
       cv_cidList.push(userCourses["data"]["student"][i]["cv_cid"]);
     }
   }
+  console.log(cv_cidList);
   cv_cidList.sort();
   for (let i = 0; i < cv_cidList.length; i++) {
     (async() =>{
     const scheduleData = await getCourseSchedule(cv_cidList[i]);
     const materialsData = await getCourseMaterials(cv_cidList[i]);
     const courseName = await getCourseInfo(cv_cidList[i]);
+    let subjectName = courseName["data"]["title"];
+    let newSubjectName = "";
+    for (let char of subjectName) {
+      if (char == " ") {
+        newSubjectName += "_";
+      }
+      else {
+        newSubjectName += char;
+      }
+    }
     if (scheduleData["data"].length < 10) {
-      combineSubject(courseName["data"]["title"], "80", "40", materialsData["data"]["title"]);
+      combineSubject(newSubjectName, "80", "40", materialsData);
     }
     else {
-      combineSubject(courseName["data"]["title"], "80", "40", scheduleData["data"]["title"])
+      combineSubject(newSubjectName, "80", "40", scheduleData)
     }
     })();
   }
 }
-// createAllBar
+
+// function changeStudentBar(subjectName, changed) {
+//   const subj = document.querySelector(subjectName);
+//   console.log(subj);
+//   const student = subj.querySelector("student");
+//   const progressBar = student.querySelector("progressBar");
+//   progressBar.style.width = changed + "%";
+
+// }
+
+//createAllBar
 // function createAllBar(userCourses, scheduleData) {
 //   for (let i = 0; i < userCourses["data"]["student"].length; i++) {
 //     if (userCourses["data"]["student"][i]["semester"] == 1) {
 //       continue;
 //     }
 //     else {
-//     document.querySelector('.subjects').appendChild(combineSubject(userCourses
-//       ["data"]["student"][i]["course_no"], "80", "40", scheduleData));
+//     combineSubject(userCourses["data"]["student"][i]["course_no"], "80", "40", scheduleData);
 //     }
 //   }
 // }
+
+
+// createAllBar(userCourses, scheduleData);
 (async () => {
   const userCourses = await getUserCourse();
   createBarFromCV_CID(userCourses);
 })();
 
+// changeStudentBar("General_Chemistry__[Section_1-2]", 70);
+let a = document.getElementsByClassName("General_Chemistry__[Section_1-2]");
+console.log(a);
