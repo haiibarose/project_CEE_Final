@@ -150,10 +150,27 @@ function generateTeacherBar(teacherProgress) {
   const teacherProgressBar = document.createElement("div");
   teacherProgressBar.classList.add('teacherProgressBar');
   progressBar.appendChild(teacherProgressBar);
-  teacherProgressBar.style.width = teacherProgress + "%";
+  teacherProgressBar.style.width = "0%";
   teacherProgressBar.style.background = "goldenrod";
   teacherProgressBar.style.height = "10px";
   teacherProgressBar.style.borderRadius = "5px";
+
+  // adding animantion
+
+  const keyframes = `
+      @keyframes teacherMoving {
+          100% {
+              width: ${teacherProgress + "%"};
+          }
+      }
+  `;
+
+  const style = document.createElement('style');
+  document.head.appendChild(style);
+  style.sheet.insertRule(keyframes, 0);
+  teacherProgressBar.style.animation = 'teacherMoving 1s linear forwards';
+
+  // adding animation finished
 
   const teacherProgressBox = document.createElement("span");
   teacherProgressBox.classList.add("progressBox");
@@ -181,10 +198,27 @@ function generateStudentBar(studentProgress) {
   const studentProgressBar = document.createElement("div");
   studentProgressBar.classList.add('studentProgressBar');
   progressBar.appendChild(studentProgressBar);
-  studentProgressBar.style.width = studentProgress + "%";
+  studentProgressBar.style.width = "0%";
   studentProgressBar.style.background = "#e91e63";
   studentProgressBar.style.height = "10px";
   studentProgressBar.style.borderRadius = "5px";
+
+  // adding animantion
+
+  const keyframes = `
+      @keyframes studentMoving {
+          100% {
+              width: ${studentProgress + "%"};
+          }
+      }
+  `;
+
+  const style = document.createElement('style');
+  document.head.appendChild(style);
+  style.sheet.insertRule(keyframes, 0);
+  studentProgressBar.style.animation = 'studentMoving 1s linear forwards';
+
+  // adding animation finished
 
   const studentProgressBox = document.createElement("span");
   studentProgressBox.classList.add("progressBox");

@@ -6,6 +6,10 @@
     flex-direction: column;
     color: white;
 
+:root {
+        --progress-width: 80%;
+}
+
 }
 #navbar {
     background-color: #1D1B26; 
@@ -117,18 +121,18 @@ body {
 .physics > .teacher > .progressBar > .teacherProgressBar {
     height: 10px;
     border-radius: 5px;
-    width: 80%;
+    width: var(--progress-width);
     position: relative;
     background: goldenrod;
-     /* animation: test 1s linear forwards; */
+     animation: test 1s linear forwards;
 }
 
-/* 
+
 @keyframes test {
     100% {
-        width: 80%;
+        width: var(--progress-width);
     }
-} */
+}
 
 .physics > .student > .progressBar > .studentProgressBar  {
     height: 10px;
