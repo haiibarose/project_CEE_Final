@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap);
+
+
 * {
     margin: 0;
     padding: 0;
@@ -7,14 +10,22 @@
     color: white;
 }
 
-:root {
-    --progress-width: 80%;
-}
+    :root {
+        --progress-width: 80%;
+    }
+
+
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+}
+
+h2 {
+    font: monospace;
+    font-size: 25px;
+    font-weight: 200;
 }
 
 
@@ -168,7 +179,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.Details {
+.Submit {
     margin-top: -10px;
     margin-bottom: 20px;
     padding: 7px;
@@ -221,4 +232,8 @@ body {
 
 .right-column-checkbox {
     margin-left: 15px;
+}
+
+.grid-item {
+    margin-top: 10px;
 }
