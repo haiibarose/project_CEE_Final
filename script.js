@@ -3,7 +3,43 @@
 const backendIPAddress = "127.0.0.1:3000";
 
 let itemsData;
+const data = new Date();
+var numberOfCheckBox = 0;
 
+const updateProgress = async (name, progress) => {
+  const studentId = await getUserProfile();
+  console.log(studentId);
+  const options = {
+    method: "PUT",
+    credentials: "include",
+    body: JSON.stringify({
+      "prog": progress,
+      "subject": name,
+      "student_id": studentId + name
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  await fetch(`http://${backendIPAddress}/items`, options).catch((error) => console.error(error));
+};
+
+const getSubjectProgress = async (uniqID) => {
+  const options = {
+    method: "GET",
+    credentials: "include",
+  };
+  const res = await fetch(
+    `http://${backendIPAddress}/items`, options).then((response) => response.json())
+
+  console.log(res);
+  const v = res.find(x => x.student_id == uniqID);
+  if (v != undefined) {
+    return v.prog;
+  } else {
+    return 0;
+  }
+};
 
 // TODO #2.3: Send Get items ("GET") request to backend server and store the response in itemsData variable
 const getItemsFromDB = async () => {
@@ -14,8 +50,8 @@ const getItemsFromDB = async () => {
   await fetch(`http://${backendIPAddress}/items`, options)
     .then((response) => response.json())
     .then((data) => {
-        itemsData = data;
-        // console.log(itemsData);
+      itemsData = data;
+      // console.log(itemsData);
     })
     .catch((error) => console.error(error))
   console.log(
@@ -23,21 +59,20 @@ const getItemsFromDB = async () => {
   );
 };
 
- // Example: Send Get user profile ("GET") request to backend server and show the response on the webpage
- const getUserProfile = async () => {
+// Example: Send Get user profile ("GET") request to backend server and show the response on the webpage
+const getUserProfile = async () => {
   const options = {
     method: "GET",
     credentials: "include",
   };
-  await fetch(
+  var student_id;
+  const res = await fetch(
     `http://${backendIPAddress}/courseville/get_profile_info`,
     options
   )
-    .then((response) => response.json())
-    .then((data) => {
-    //   console.log(data);
-    // console.log("getUserProfileTest");
-    })
+  const data = await res.json();
+  student_id = data.user.id;
+  return student_id;
 };
 
 // getUserCourse
@@ -108,7 +143,7 @@ async function getCourseInfo(cv_cid) {
 
 
 // adding scroll on webpage
-window.onscroll = function() {scrollFunction()};
+window.onscroll = function () { scrollFunction() };
 function scrollFunction() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     document.getElementById("navbar").style.top = "0";
@@ -117,11 +152,11 @@ function scrollFunction() {
   }
 }
 
-   
+
 // adding new subject and progressBar
 
 function generateNewSubject(subjectName) {
-  
+
 
   const subjectDiv = document.createElement('div');
   subjectDiv.classList.add(subjectName);
@@ -182,6 +217,8 @@ function generateTeacherBar(teacherProgress) {
 
 function generateStudentBar(studentProgress) {
 
+  studentProgress = parseInt(studentProgress, 10);
+
   const student = document.createElement("div");
   student.classList.add("student");
 
@@ -224,39 +261,122 @@ function generateStudentBar(studentProgress) {
   studentProgressBox.classList.add("progressBox");
   studentProgressBox.innerHTML = studentProgress;
   studentProgressBar.appendChild(studentProgressBox);
-  
+
   return student;
 }
-function makeCheckBox(scheduleData) {
+
+
+// function makeCheckBox(data) {
+//   const details = document.createElement('div');
+//   details.classList.add('progressDetails');
+//   details.style.display = 'none';
+
+//   for (let i = 0; i < data['data'].length; i++) {
+//     const cb = document.createElement("input");
+//     cb.type = "checkbox";
+//     cb.classList.add("checkBox");
+//     // adding style to checkBox
+
+
+//     // adding style to checkbox finished
+//     const sp = document.createElement('span');
+//     if (data['data'][i]['weekno'] == undefined) {
+//       sp.innerHTML = data['data'][i]['title'];
+//     }
+//     else {
+//       sp.innerHTML = data['data'][i]['weekno'] + " " + data['data'][i]['title'];
+//     }
+//     sp.style.margin = "5px";
+//     cb.style.marginright = "30px";
+//     details.appendChild(sp);
+//     if (i <= data['data'].length - 2) {
+//       details.appendChild(cb);
+//     }
+//   }
+//   return details;
+// }
+
+// <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by Rose, if(error): uncomment the code above !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+function makeCheckBox(data) {
   const details = document.createElement('div');
   details.classList.add('progressDetails');
   details.style.display = 'none';
 
-  for (let i = 0 ;i < scheduleData['data'].length; i++) {
+  const gridContainer = document.createElement('div');
+  gridContainer.classList.add('grid-container');
+  details.appendChild(gridContainer);
+
+  for (let i = 0; i < data['data'].length; i++) {
+    const gridItem = document.createElement('div');
+    gridItem.classList.add('grid-item');
+
     const cb = document.createElement("input");
     cb.type = "checkbox";
-    const sp = document.createElement('span');
-    sp.innerHTML = scheduleData['data'][i]['title'];
-    sp.style.margin = "5px";
-    cb.style.marginright = "30px";
-    details.appendChild(sp);
-    if (i < scheduleData['data'].length - 1) {
-      details.appendChild(cb);
-    }
-  }
-  return details;
+    cb.classList.add("checkBox");
+    cb.id = `checkbox-${numberOfCheckBox}`; // Use a unique id for each checkbox
+    numberOfCheckBox++;
 
+    // Load the checked status from localStorage
+    const checkedStatus = localStorage.getItem(cb.id);
+    if (checkedStatus === 'true') {
+      cb.checked = true;
+    }
+
+    // Save the checked status to localStorage when the checkbox is clicked
+    cb.addEventListener('change', () => {
+      localStorage.setItem(cb.id, cb.checked);
+    });
+
+    const sp = document.createElement('span');
+    if (data['data'][i]['weekno'] == undefined) {
+      sp.innerHTML = data['data'][i]['title'];
+    } else {
+      sp.innerHTML = data['data'][i]['weekno'] + " " + data['data'][i]['title'];
+    }
+
+    gridItem.appendChild(cb); // Move this line before appending the span
+    gridItem.appendChild(sp);
+    gridContainer.appendChild(gridItem);
+  }
+
+  return details;
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    (function (index) {
+      var key = 'checkbox-' + index;
+      checkboxes[index].addEventListener('change', function () {
+        if (this.checked) {
+          localStorage.setItem(key, 'true');
+        } else {
+          localStorage.removeItem(key);
+        }
+      });
+
+      if (localStorage.getItem(key) === 'true') {
+        checkboxes[index].checked = true;
+      } else {
+        checkboxes[index].checked = false;
+      }
+    })(i);
+  }
+});
+
+
 function createDetailsButton(scheduleData) {
   const detailsContainer = document.createElement('div');
 
   const detailsButton = document.createElement('button');
   detailsButton.classList.add('Details');
   detailsButton.innerText = 'Details';
-  detailsButton.onclick = function() {
+  detailsButton.onclick = function () {
     expandDetails(details);
   };
-  
+
   const details = makeCheckBox(scheduleData);
 
   detailsContainer.appendChild(detailsButton);
@@ -265,6 +385,35 @@ function createDetailsButton(scheduleData) {
   return detailsContainer;
 
 }
+
+function createSubmitButton(name) {
+  const submitContainer = document.createElement('div');
+
+  const submitButton = document.createElement('button');
+  submitButton.classList.add('Submit');
+  submitButton.id = name;
+  submitButton.innerText = 'Submit';
+  submitButton.onclick = function () {
+    var subject = document.querySelector("[class=" + CSS.escape(name) + "]");
+    var checkboxes = subject.querySelectorAll(".checkBox");
+    console.log(checkboxes);
+    var c = 0;
+    for (var i = 0; i != checkboxes.length; i++) {
+      //console.log(checkboxes[i].checked);
+      if (checkboxes[i].checked === true) {
+        c++;
+      }
+    }
+    console.log(c / checkboxes.length * 100);
+    updateProgress(name, c / checkboxes.length * 100);
+  };
+
+  submitContainer.appendChild(submitButton);
+
+  return submitContainer;
+
+}
+
 function expandDetails(detailsDiv) {
   if (detailsDiv.style.display === 'none') {
     detailsDiv.style.display = 'block';
@@ -273,18 +422,34 @@ function expandDetails(detailsDiv) {
   }
 }
 
+// function combineSubject(name, teacherProgress, studentProgress, scheduleData) {
+//   const subj = generateNewSubject(name);
+//   const subjTeacher = generateTeacherBar(teacherProgress);
+//   const subjStudent = generateStudentBar(studentProgress);
+//   const subjDetails = createDetailsButton(scheduleData);
+//   const subjSubmitButton = createSubmitButton();
+
+//   subj.appendChild(subjTeacher);
+//   subj.appendChild(subjStudent);
+//   subj.appendChild(subjDetails);
+//   subj.appendChild(subjSubmitButton);
+
+//   document.querySelector('.subjects').appendChild(subj);
+// }
 
 function combineSubject(name, teacherProgress, studentProgress, scheduleData) {
   const subj = generateNewSubject(name);
   const subjTeacher = generateTeacherBar(teacherProgress);
   const subjStudent = generateStudentBar(studentProgress);
   const subjDetails = createDetailsButton(scheduleData);
+  const subjSubmitButton = createSubmitButton(name);
 
   subj.appendChild(subjTeacher);
   subj.appendChild(subjStudent);
   subj.appendChild(subjDetails);
-  
-  document.querySelector('.subjects').appendChild(subj);
+  subj.appendChild(subjSubmitButton);
+
+  document.querySelector('.subjects').insertAdjacentElement('beforeend', subj);
 }
 
 // createBarFromCV_CID
@@ -292,38 +457,38 @@ function combineSubject(name, teacherProgress, studentProgress, scheduleData) {
 function createBarFromCV_CID(userCourses) {
   let cv_cidList = [];
   for (let i = 0; i < userCourses["data"]["student"].length; i++) {
-    if (userCourses["data"]["student"][i]["semester"] == 1) {
+    if (userCourses["data"]["student"][i]["semester"] == 1 || userCourses["data"]["student"][i]["year"] == "2021") {
+      continue;
+    }
+    else if (userCourses["data"]["student"][i]["course_no"].includes("CU")) {
       continue;
     }
     else {
       cv_cidList.push(userCourses["data"]["student"][i]["cv_cid"]);
     }
   }
-  console.log(cv_cidList);
   cv_cidList.sort();
-  for (let i = 0; i < cv_cidList.length; i++) {
-    (async() =>{
-    const scheduleData = await getCourseSchedule(cv_cidList[i]);
-    const materialsData = await getCourseMaterials(cv_cidList[i]);
-    const courseName = await getCourseInfo(cv_cidList[i]);
-    let subjectName = courseName["data"]["title"];
-    let newSubjectName = "";
-    for (let char of subjectName) {
-      if (char == " ") {
-        newSubjectName += "_";
-      }
-      else {
-        newSubjectName += char;
-      }
+  console.log(cv_cidList);
+
+  const promises = cv_cidList.map(async (cid) => {
+    const scheduleData = await getCourseSchedule(cid);
+    const materialsData = await getCourseMaterials(cid);
+    const courseName = await getCourseInfo(cid);
+    const subjectName = courseName["data"]["title"].replace(/ /g, "_");
+    const data = scheduleData["data"].length < 10 ? materialsData : scheduleData;
+    return { subjectName, data };
+  });
+
+  Promise.all(promises).then(async (results) => {
+    results.sort((a, b) => a.subjectName.localeCompare(b.subjectName));
+    for (const result of results) {
+      const studentId = await getUserProfile();
+      console.log(studentId + result.subjectName);
+      const studentProgress = await getSubjectProgress(studentId + result.subjectName);
+      console.log(studentProgress);
+      combineSubject(result.subjectName, "80", studentProgress, result.data);
     }
-    if (scheduleData["data"].length < 10) {
-      combineSubject(newSubjectName, "80", "40", materialsData);
-    }
-    else {
-      combineSubject(newSubjectName, "80", "40", scheduleData)
-    }
-    })();
-  }
+  });
 }
 
 // function changeStudentBar(subjectName, changed) {
@@ -344,6 +509,28 @@ function createBarFromCV_CID(userCourses) {
 //     else {
 //     combineSubject(userCourses["data"]["student"][i]["course_no"], "80", "40", scheduleData);
 //     }
+//   }
+// }
+
+
+
+// document.addEventListener("DOMContentLoaded", async function () {
+//   const userCourses = await getUserCourse();
+//   createBarFromCV_CID(userCourses);
+// });
+
+// async function getItemsFromDB() {
+//   try {
+//     const options = {
+//       method: "GET",
+//       credentials: "include",
+//     };
+//     const response = await fetch(`http://${backendIPAddress}/items`, options);
+//     const data = await response.json();
+//     itemsData = data;
+//     console.log("This function should fetch 'get items' route from backend server.");
+//   } catch (error) {
+//     console.error(error);
 //   }
 // }
 

@@ -1,56 +1,128 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>MyCourseville API Home Page</title>
-        <link rel="stylesheet" href="style.css"></link>
-        <script src="script_cv.js" defer></script>
-    </head>
-    <body onload=getUserProfile();getCompEngEssCid();>
-        <div>
-            <section class="section-right">
-                <button class="button logout-button" onclick=logout()>Logout</button>
-            </section>
-            <section>
-                <header>
-                    <h1 id="app-name">MyCourseville API Home Page Group <span id="group-id"></span></h1>
-                </header>
-            </section>
-            <section>
-                <h2 class="section-title">1. Profile Section</h2>
-                <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span></br>
-                    Name-Surname (Thai) : <span id="thai-name-info"></span></p>
-            </section>
-            <section>
-                <h2 class="section-title">2. Get Computer Engineering Essential CV_cid</h2>
-                <p id="info"> The CV_cid value of Computer Engineering Essential subject is <span id="ces-cid-value"></span>.</p>
-            </section>
-            <section>
-                <h2 class="section-title">3. Get Computer Engineering Essential Assignments</h2>
-                <button class="button create-ces-assignment-table" onclick=createCompEngEssAssignmentTable()>Create table</button>
-                <table class="main-table">
-                    <thead>
-                        <tr id="main-table-head">
-                            <th>Id</th>
-                            <th>Title</th>
-                        </tr>
-                    </thead>
-                    <tbody id="main-table-body">
-                        <tr id=0>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MyCourseville API Home Page</title>
+    <link rel="stylesheet" href="style.css">
+    </link>
+    <script src="script_cv.js" defer></script>
+</head>
+
+<body onload=getUserProfile();getCompEngEssCid();>
+
+
+    <section class="section-right">
+        <header>
+            <h1 id="app-name">MyCourseville API Home Page Group <span id="group-id"></span></h1>
+        </header>
+    </section>
+    <main>
+        <div class="sections-container">
+            <div class="section-box">
+                <section>
+                    <h2 class="section-title">Profile</h2>
+                    <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span></br>
+                        Name-Surname (Thai) : <span id="thai-name-info"></span></p>
+                </section>
+            </div>
+            <div class="section-box">
+                <section>
+                    <h2 class="section-title">Get Computer Engineering Essential CV_cid</h2>
+                    <p id="info"> The CV_cid value of Computer Engineering Essential subject is <span
+                            id="ces-cid-value"></span>.</p>
+                </section>
+            </div>
+            <div class="section-box">
+                <section>
+                    <h2 class="section-title">Get Computer Engineering Essential Assignments</h2>
+
+                    <!-- <button class="button create-ces-assignment-table" onclick=createCompEngEssAssignmentTable()>Create
+                table</button> -->
+
+                    <!-- <table class="main-table">
+                <thead>
+                    <tr id="main-table-head">
+                        <th>Id</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+                <tbody id="main-table-body">
+                    <tr id=0>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                </tbody>
+            </table> -->
+
+                </section>
+            </div>
         </div>
-        <div class="section-credit">
-            &#169; 2110221 Computer Engineering Essentials (2022/2) &#169;
-        </div>
-    </body>
+    </main>
+    <section>
+        <button class="button logout-button" onclick=logout()>Logout</button>
+    </section>
+
+    <!-- <div class="section-credit">
+        &#169; 2110221 Computer Engineering Essentials (2022/2) &#169;
+    </div> -->
+
+</body>
+
 </html>
 
 
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by Rose, if(error): uncomment the code above !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>MyCourseville API Home Page Group 26</title>
+</head>
+
+<body>
+    <div class="grid-container"></div>
+    <header>
+        <h1 id="app-name">MyCourseville API Home Page Group <span id="group-id"></span></h1>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="section-title">1. Profile Section</h2>
+            <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span><br>
+                Name-Surname (Thai) : <span id="thai-name-info"></span></p>
+        </section>
+
+        <section>
+            <h2 class="section-title">2. Get Computer Engineering Essential CV_cid</h2>
+            <p id="info"> The CV_cid value of Computer Engineering Essential subject is <span
+                    id="ces-cid-value"></span>.</p>
+        </section>
+
+        <section>
+            <h2 class="section-title">3. Get Computer Engineering Essential Assignments</h2>
+        </section>
+
+        <div class="button-container">
+            <button class="button logout-button" onclick="logout()">Logout</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="section-credit">
+            &#169; 2110221 Computer Engineering Essentials (2022/2) &#169;
+        </div>
+    </footer> -->
+<section class="section-credit">
+    &#169; 2110221 Computer Engineering Essentials (2022/2) &#169;
+</section>
 
 
+</div>
+<script src="script_cv.js"></script>
+</body>
 
+</html>

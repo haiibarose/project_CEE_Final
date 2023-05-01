@@ -5,7 +5,7 @@ let itemsData;
 
 // TODO #2.1: Edit group number
 const getGroupNumber = () => {
-  return 14;
+  return 26;
 };
 
 // TODO #2.2: Show group members
@@ -44,7 +44,7 @@ const getItemsFromDB = async () => {
   await fetch(`http://${backendIPAddress}/items`, options)
     .then((response) => response.json())
     .then((data) => {
-        itemsData = data;
+      itemsData = data;
     })
     .catch((error) => console.error(error))
   console.log(

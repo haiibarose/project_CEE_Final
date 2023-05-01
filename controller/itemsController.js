@@ -45,7 +45,7 @@ exports.addItem = async (req, res) => {
   //const created_date = Date.now();
   // const student_id = req.params.student_id;
   // const prog = req.params.prog;
-  const item = {...req.body};
+  const item = { ...req.body };
   const params = {
     TableName: process.env.aws_student_progress_table_name,
     Item: item,
@@ -54,13 +54,31 @@ exports.addItem = async (req, res) => {
 
   // You should change the response below.
   try {
-    await docClient.send(new PutCommand(params));  
+    await docClient.send(new PutCommand(params));
     res.status(200).end();
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
   }
 };
+
+//------------ update progress -----------//
+exports.updateItem = async (req, res) => {
+  const item = { ...req.body }
+  const params = {
+    TableName: process.env.aws_student_progress_table_name,
+    Item: item
+  }
+
+  try {
+    await docClient.send(new PutCommand(params));
+    res.status(200).end();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+}
+
 
 // TODO #1.3: Delete an item from DynamDB
 exports.deleteItem = async (req, res) => {
