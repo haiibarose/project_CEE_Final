@@ -20,6 +20,10 @@
             <h2 class="section-title description">Please press the login button to proceed to MyCourseville API Home
                 Page</h2>
             <p class="section-subtitle description">(You need to login with MyCourseville Platform account.)</p>
+            <!-- Add this in your HTML file after the <p class="section-subtitle description"> line -->
+
+            <p class="section-subtitle description">Current status: <span id="statusText">Please Login!</span></p>
+
         </header>
     </section>
 
@@ -31,6 +35,9 @@
 
     <div class="button-container">
         <button class="button login-button" onclick=authorizeApplication()>Login</button>
+        <!-- Add the id attribute to the login button -->
+    <button class="button login-button" id="loginButton" onclick=authorizeApplication()>Login</button>
+
         <button class="button change-page-button" onclick="window.location.href='index.html'">See Progress
         </button>
     </div>

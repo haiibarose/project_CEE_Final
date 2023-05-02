@@ -28,6 +28,10 @@ h2 {
     font-weight: 200;
 }
 
+.logout {
+    display: inline-block;
+    margin-left: 400px;
+}
 
 #navbar {
     /* background-color: #AFD3E2; */

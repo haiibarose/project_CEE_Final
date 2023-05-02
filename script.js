@@ -1,6 +1,6 @@
 // const { get } = require("./routes/coursevilleRoutes.js");
 
-const backendIPAddress = "52.4.6.88:3000";
+const backendIPAddress = "127.0.0.1:3000";
 
 let itemsData;
 const currentDate = new Date();
@@ -273,7 +273,7 @@ function generateStudentBar(subjectName, studentProgress) {
   studentProgressBar.classList.add('studentProgressBar_' + subjectName);
   progressBar.appendChild(studentProgressBar);
   studentProgressBar.style.width = "0%";
-  studentProgressBar.style.background = "#e91e63";
+  studentProgressBar.style.background = "#212A3E";
   studentProgressBar.style.height = "10px";
   studentProgressBar.style.borderRadius = "5px";
 
@@ -293,7 +293,7 @@ function generateStudentBar(subjectName, studentProgress) {
   // studentProgressBar.style.animation = `studentMoving_${subjectName} 1s linear forwards`;
   studentProgressBar.style.width = 0 + "%";
   // studentProgressBar.style.transition = "width 1s linear";
-  studentProgressBar.style.transition = "width 1s cubic-bezier(0, -3.23, 0, 1.64";
+  studentProgressBar.style.transition = "width 1s cubic-bezier(0, -3.23, 0, 1.64)";
 
   setTimeout(() => {
     studentProgressBar.style.width = studentProgress + "%";
@@ -434,6 +434,9 @@ function makeCheckBox(data) {
   return details;
 }
 
+const logout = async () => {
+  window.location.href = `http://${backendIPAddress}/courseville/logout`;
+};
 
 document.addEventListener('DOMContentLoaded', function () {
   var checkboxes = document.querySelectorAll('input[type="checkbox"]');
