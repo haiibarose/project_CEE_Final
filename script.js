@@ -148,7 +148,7 @@ async function getCourseInfo(cv_cid) {
 // adding scroll on webpage
 window.onscroll = function () { scrollFunction() };
 function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+  if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
     document.getElementById("navbar").style.top = "0";
   } else {
     document.getElementById("navbar").style.top = "-70px";
@@ -168,7 +168,7 @@ function generateNewSubject(subjectName) {
   const subj = document.createElement('span');
   subj.innerHTML = subjectName;
   subj.style.padding = '10px';
-  subj.style.color = "#FFF";
+  subj.style.color = "#454545";
   subj.style.fontSize = "2em";
   subj.style.fontFamily = "'Bebas Neue', cursive";
   subj.style.fontWeight = "500";
@@ -177,7 +177,7 @@ function generateNewSubject(subjectName) {
   subj.style.top = "50%";
   subj.style.left = "50%";
   subj.style.transform = "translate(-50%,-50%)";
-  subj.style.backgroundImage = "linear-gradient(#19A7CE, #19A7CE)";
+  subj.style.backgroundImage = "linear-gradient(#FF6000, #FF6000)";
   subj.style.backgroundSize = "100% 10px";
   subj.style.backgroundRepeat = "no-repeat";
   subj.style.backgroundPosition = "100% 0%";
@@ -188,6 +188,7 @@ function generateNewSubject(subjectName) {
   subj.style.backgroundSize = "100% 100%";
   subj.style.backgroundPosition = "0% 100%";
   subj.style.transition = "background-position .7s, background-size .5s ease-in-out";
+  subj.style.color = "#FFE6C7"
 
   
 });
@@ -272,12 +273,12 @@ function generateStudentBar(subjectName, studentProgress) {
   studentProgressBar.classList.add('studentProgressBar_' + subjectName);
   progressBar.appendChild(studentProgressBar);
   studentProgressBar.style.width = "0%";
-  studentProgressBar.style.background = "#E86A33";
+  studentProgressBar.style.background = "#e91e63";
   studentProgressBar.style.height = "10px";
   studentProgressBar.style.borderRadius = "5px";
 
   // adding animantion
-  
+
   const keyframes = `
     @keyframes studentMoving_${subjectName} {
         100% {
@@ -285,23 +286,27 @@ function generateStudentBar(subjectName, studentProgress) {
         }
     }
   `;
-  
+
   const style = document.createElement('style');
   document.head.appendChild(style);
   style.sheet.insertRule(keyframes, 0);
-  //studentProgressBar.style.animation = `studentMoving_${subjectName} 1s linear forwards`;
+  // studentProgressBar.style.animation = `studentMoving_${subjectName} 1s linear forwards`;
+  studentProgressBar.style.width = 0 + "%";
+  // studentProgressBar.style.transition = "width 1s linear";
+  studentProgressBar.style.transition = "width 1s cubic-bezier(0, -3.23, 0, 1.64";
+
+  setTimeout(() => {
+    studentProgressBar.style.width = studentProgress + "%";
+  }, 500);
+
 
   // adding animation finished
 
   const studentProgressBox = document.createElement("span");
-  studentProgressBox.classList.add("progressBox");  
+  studentProgressBox.classList.add("progressBox");
   studentProgressBox.innerHTML = studentProgress;
   studentProgressBar.appendChild(studentProgressBox);
 
-  studentProgressBar.style.transition = "width 1s ease-in";
-
-  studentProgressBar.style.width = studentProgress + "%";
-  
   return student;
 }
   // studentProgress = parseInt(studentProgress, 10);
@@ -637,58 +642,10 @@ function createBarFromCV_CID(userCourses) {
 //   createBarFromCV_CID(userCourses);
 // });
 
-function updateBars(userCourses) {
-  let cv_cidList = [];
-  for (let i = 0; i < userCourses["data"]["student"].length; i++) {
-    if (userCourses["data"]["student"][i]["semester"] == 1 || userCourses["data"]["student"][i]["year"] == "2021") {
-      continue;
-    }
-    else if (userCourses["data"]["student"][i]["course_no"].includes("CU")) {
-      continue;
-    }
-    else {
-      cv_cidList.push(userCourses["data"]["student"][i]["cv_cid"]);
-    }
-  }
-  cv_cidList.sort();
-  console.log(cv_cidList);
-
-  const promises = cv_cidList.map(async (cid) => {
-    const courseName = await getCourseInfo(cid);
-    const subjectName = courseName["data"]["title"].replace(/[()]/g, '');
-    let newSubjectName = "";
-    for (const char of subjectName) {
-      if (char == " ") {
-        newSubjectName += "_";
-      }
-      else if (char == "[" || char == "]") {
-        continue;
-      }
-      else {
-        newSubjectName += char;
-      }
-
-    }
-
-    return {newSubjectName};
-  });
-
-  Promise.all(promises).then(async (results) => {
-    results.sort((a, b) => a.newSubjectName.localeCompare(b.newSubjectName));
-    for (const result of results) {
-      const studentId = await getUserProfile();
-      const studentProgress = await getSubjectProgress(studentId + result.newSubjectName);
-      const studentProgressBar = document.querySelector('.studentProgressBar_' + result.newSubjectName);
-      console.log('.studentProgressBar_' + result.newSubjectName);
-      studentProgressBar.style.transition = "width 1s ease-in";
-      studentProgressBar.style.width = studentProgress + "%";
-    }
-  });
-}
 
 // createAllBar(userCourses, scheduleData);
 (async () => {
   const userCourses = await getUserCourse();
   createBarFromCV_CID(userCourses);
-  updateBars(userCourses);
+  //updateBars(userCourses);
 })();
