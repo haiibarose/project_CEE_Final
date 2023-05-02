@@ -151,7 +151,7 @@ function scrollFunction() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     document.getElementById("navbar").style.top = "0";
   } else {
-    document.getElementById("navbar").style.top = "-50px";
+    document.getElementById("navbar").style.top = "-70px";
   }
 }
 
@@ -163,11 +163,12 @@ function generateNewSubject(subjectName) {
 
   const subjectDiv = document.createElement('div');
   subjectDiv.classList.add(subjectName);
+  subjectDiv.style.marginBottom = "20px";
 
   const subj = document.createElement('span');
   subj.innerHTML = subjectName;
   subj.style.padding = '10px';
-  subj.style.color = "#333";
+  subj.style.color = "#FFF";
   subj.style.fontSize = "2em";
   subj.style.fontFamily = "'Bebas Neue', cursive";
   subj.style.fontWeight = "500";
@@ -176,7 +177,7 @@ function generateNewSubject(subjectName) {
   subj.style.top = "50%";
   subj.style.left = "50%";
   subj.style.transform = "translate(-50%,-50%)";
-  subj.style.backgroundImage = "linear-gradient(gold, gold)";
+  subj.style.backgroundImage = "linear-gradient(#19A7CE, #19A7CE)";
   subj.style.backgroundSize = "100% 10px";
   subj.style.backgroundRepeat = "no-repeat";
   subj.style.backgroundPosition = "100% 0%";
@@ -220,7 +221,7 @@ function generateTeacherBar() {
   teacherProgressBar.classList.add('teacherProgressBar');
   progressBar.appendChild(teacherProgressBar);
   teacherProgressBar.style.width = "0%";
-  teacherProgressBar.style.background = "goldenrod";
+  teacherProgressBar.style.background = "#7C9070";
   teacherProgressBar.style.height = "10px";
   teacherProgressBar.style.borderRadius = "5px";
 
@@ -237,9 +238,9 @@ function generateTeacherBar() {
   const style = document.createElement('style');
   document.head.appendChild(style);
   style.sheet.insertRule(keyframes, 0);
-  // teacherProgressBar.style.animation = 'teacherMoving 1s linear forwards';
-  teacherProgressBar.style.width = teacherProgress + "%";
-  teacherProgressBar.style.transition = "width 1s linear";
+  teacherProgressBar.style.animation = 'teacherMoving 1s linear forwards';
+  // teacherProgressBar.style.width = teacherProgress + "%";
+  // teacherProgressBar.style.transition = "width 1s linear";
 
   // adding animation finished
 
@@ -271,7 +272,7 @@ function generateStudentBar(subjectName, studentProgress) {
   studentProgressBar.classList.add('studentProgressBar_' + subjectName);
   progressBar.appendChild(studentProgressBar);
   studentProgressBar.style.width = "0%";
-  studentProgressBar.style.background = "#e91e63";
+  studentProgressBar.style.background = "#E86A33";
   studentProgressBar.style.height = "10px";
   studentProgressBar.style.borderRadius = "5px";
 
@@ -288,25 +289,21 @@ function generateStudentBar(subjectName, studentProgress) {
   const style = document.createElement('style');
   document.head.appendChild(style);
   style.sheet.insertRule(keyframes, 0);
-  // studentProgressBar.style.animation = `studentMoving_${subjectName} 1s linear forwards`;
-  studentProgressBar.style.width = studentProgress + "%";
-  studentProgressBar.style.transition = "width 1s linear";
-
-  setTimeout(() => {
-    studentProgressBar.style.width = studentProgress + "%";
-  }, 1000);
-  
+  //studentProgressBar.style.animation = `studentMoving_${subjectName} 1s linear forwards`;
 
   // adding animation finished
 
   const studentProgressBox = document.createElement("span");
-  studentProgressBox.classList.add("progressBox");
+  studentProgressBox.classList.add("progressBox");  
   studentProgressBox.innerHTML = studentProgress;
   studentProgressBar.appendChild(studentProgressBox);
+
+  studentProgressBar.style.transition = "width 1s ease-in";
+
+  studentProgressBar.style.width = studentProgress + "%";
   
   return student;
 }
-
   // studentProgress = parseInt(studentProgress, 10);
 
   // const student = document.createElement("div");
@@ -462,6 +459,8 @@ function createDetailsButton(scheduleData) {
   const detailsButton = document.createElement('button');
   detailsButton.classList.add('Details');
   detailsButton.innerText = 'Details';
+  detailsButton.style.fontFamily = "monospace";
+  detailsButton.style.fontWeight = 800;
   detailsButton.onclick = function () {
     expandDetails(details);
   };
@@ -482,6 +481,8 @@ function createSubmitButton(name) {
   submitButton.classList.add('Submit');
   submitButton.id = name;
   submitButton.innerText = 'Submit';
+  submitButton.style.fontFamily = "monospace";
+  submitButton.style.fontWeight = 800;
   submitButton.onclick = function () {
     var subject = document.querySelector("[class=" + CSS.escape(name) + "]");
     var checkboxes = subject.querySelectorAll(".checkBox");
@@ -500,7 +501,7 @@ function createSubmitButton(name) {
 
     const studentProgressBar = document.querySelector('.studentProgressBar_' + name);
     studentProgressBar.style.width = progress + "%";
-    studentProgressBar.style.transition = "width 1s linear";
+    studentProgressBar.style.transition = "width 1s ease-in";
 
     const studentProgressBox = studentProgressBar.children[0];
     studentProgressBox.innerHTML = progress;
@@ -601,6 +602,9 @@ function createBarFromCV_CID(userCourses) {
       const studentProgress = await getSubjectProgress(studentId + result.newSubjectName);
       console.log(studentProgress);
       combineSubject(result.newSubjectName, studentProgress, result.data);
+      const studentProgressBar = document.querySelector('.studentProgressBar_' + result.newSubjectName);
+      studentProgressBar.style.transition = "width 1s ease-in";
+      studentProgressBar.style.width = 0 + "%";
     }
   });
 }
@@ -633,11 +637,58 @@ function createBarFromCV_CID(userCourses) {
 //   createBarFromCV_CID(userCourses);
 // });
 
+function updateBars(userCourses) {
+  let cv_cidList = [];
+  for (let i = 0; i < userCourses["data"]["student"].length; i++) {
+    if (userCourses["data"]["student"][i]["semester"] == 1 || userCourses["data"]["student"][i]["year"] == "2021") {
+      continue;
+    }
+    else if (userCourses["data"]["student"][i]["course_no"].includes("CU")) {
+      continue;
+    }
+    else {
+      cv_cidList.push(userCourses["data"]["student"][i]["cv_cid"]);
+    }
+  }
+  cv_cidList.sort();
+  console.log(cv_cidList);
 
+  const promises = cv_cidList.map(async (cid) => {
+    const courseName = await getCourseInfo(cid);
+    const subjectName = courseName["data"]["title"].replace(/[()]/g, '');
+    let newSubjectName = "";
+    for (const char of subjectName) {
+      if (char == " ") {
+        newSubjectName += "_";
+      }
+      else if (char == "[" || char == "]") {
+        continue;
+      }
+      else {
+        newSubjectName += char;
+      }
+
+    }
+
+    return {newSubjectName};
+  });
+
+  Promise.all(promises).then(async (results) => {
+    results.sort((a, b) => a.newSubjectName.localeCompare(b.newSubjectName));
+    for (const result of results) {
+      const studentId = await getUserProfile();
+      const studentProgress = await getSubjectProgress(studentId + result.newSubjectName);
+      const studentProgressBar = document.querySelector('.studentProgressBar_' + result.newSubjectName);
+      console.log('.studentProgressBar_' + result.newSubjectName);
+      studentProgressBar.style.transition = "width 1s ease-in";
+      studentProgressBar.style.width = studentProgress + "%";
+    }
+  });
+}
 
 // createAllBar(userCourses, scheduleData);
 (async () => {
   const userCourses = await getUserCourse();
   createBarFromCV_CID(userCourses);
+  updateBars(userCourses);
 })();
-
