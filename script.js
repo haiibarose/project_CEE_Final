@@ -1,6 +1,6 @@
 // const { get } = require("./routes/coursevilleRoutes.js");
 
-const backendIPAddress = "127.0.0.1:3000";
+const backendIPAddress = "52.4.6.88:3000";
 
 let itemsData;
 const currentDate = new Date();
